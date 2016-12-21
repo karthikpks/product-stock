@@ -8,7 +8,7 @@
 $(function() {
     "use strict";
     
-    var url = "http://localhost:8888/productstock/";
+    var url = "http://localhost:8888/product-stock/";
 
     var initialOffsetcompany = 10;
     var companyListPrevious = 0;
@@ -76,7 +76,7 @@ $(function() {
               // this is where we append a loading image
               $("#saveBtnInCompanyMaster").hide();
               $("#closeBtnInCompanyMaster").hide();
-              $('#company-master-ajax-panel').html('<img src="http://localhost:8888/productstock/assets/img/ajax-loader.gif" width="50" alt="Loading..." />');
+              $('#company-master-ajax-panel').html('<img src="http://localhost:8888/product-stock/assets/img/ajax-loader.gif" width="50" alt="Loading..." />');
             },
             success:function(data){
               // successful request; do something with the data
@@ -193,7 +193,7 @@ $(function() {
               // this is where we append a loading image
               $("#saveBtnIncompanyMaster").hide();
               $("#closeBtnIncompanyMaster").hide();
-              $('#ajax-panel').html('<img src="http://localhost:8888/productstock/assets/img/ajax-loader.gif" width="50" alt="Loading..." />');
+              $('#ajax-panel').html('<img src="http://localhost:8888/product-stock/assets/img/ajax-loader.gif" width="50" alt="Loading..." />');
             },
             success:function(data){
               // successful request; do something with the data
