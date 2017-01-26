@@ -75,7 +75,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
         </div>
       </div>
     </div>
-    <?php if($user_role == 1 || $user_role == 2) { ?>
+    <?php if($user_role <= 5 ) { ?>
     <div class="col-md-3">
       <div class="sm-st clearfix">
         <a href="#customer-list" > 
@@ -179,7 +179,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
     </div>
     <!-- modal -->
     <?php } ?>
-    <?php if($user_role == 1 || $user_role == 2) { ?>
+    <?php if($user_role <= 4) { ?>
     <div class="col-md-3">
       <div class="sm-st clearfix">
         <a href="#company-list" > 
@@ -285,7 +285,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
     </div>
     <!-- modal -->
     <?php } ?>
-    <?php if($user_role == 1 || $user_role == 2) { ?>
+    <?php if($user_role <= 4) { ?>
     <div class="col-md-3">
       <div class="sm-st clearfix">
         <a href="#employee-list"> 
@@ -314,6 +314,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
           </div>
           <div class="modal-body">
             <form role="form" name="employeeMasterForm" id="employeeMasterForm" method="POST">
+              <input type="hidden" class="form-control" name="employeeId" id="employeeId">
               <div class="form-group">
                 <label for="employeeMasterName">First name
                 </label>
@@ -327,7 +328,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
               <div class="form-group">
                 <label for="employeeMasterDOB">DOB
                 </label>
-                <input type="date" class="form-control" name="employeeMasterDOB" id="customerDob" placeholder="Enter DOB">
+                <input type="date" class="form-control" name="employeeMasterDOB" id="employeeMasterDOB" placeholder="Enter DOB">
               </div>
               <div class="form-group">
                 <label for="employeeMasterGender">Gender
@@ -396,7 +397,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
             </span>
             <button data-dismiss="modal" id="closeBtnInEmployeeMaster" class="btn btn-default" type="button">Close
             </button>
-            <button class="btn btn-success" id="saveBtnInEmployeeMaster" type="button">Save
+            <button class="btn btn-success" id="saveBtnInEmployeeMaster" data-employeemaster="save"type="button">Save
             </button>
           </div>
         </div>
@@ -404,7 +405,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
     </div>
     <!-- modal -->
     <?php } ?>
-    <?php if($user_role == 1 || $user_role == 2) { ?>
+    <?php if($user_role <= 4) { ?>
     <div class="col-md-3">
       <div class="sm-st clearfix">
         <a href="#category-list"> 
@@ -433,22 +434,24 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
           </div>
           <div class="modal-body">
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-4" id="productCategoryModel">
                 <form role="form" name="categoryMasterForm" id="categoryMasterForm"> 
                   <div class="form-group" style="">
                     <label for="categoryMasterDesc">Product Category
                     </label>
+                    <input type="hidden" name="categoryMasterId" id="categoryMasterId">
                     <input type="text" class="form-control" name="categoryMasterDesc" id="categoryMasterDesc" placeholder="Enter product category ">
                   </div>
-                  <button class="btn btn-primary pull-right" id="saveBtnInCategoryMaster" type="button">Save
+                  <button class="btn btn-primary pull-right" data-category-save-type="save" id="saveBtnInCategoryMaster" type="button">Save
                   </button>
                 </form>
               </div>
-              <div class="col-md-4" style="border-left: thick solid #39435C;">
+              <div class="col-md-4" id="productSubCategoryModel" style="border-left: thick solid #39435C;">
                 <form role="form" name="subCategoryMasterForm" id="subCategoryMasterForm"> 
                   <div class="form-group">
                     <label for="subMainCategory"> Select Product Category
                     </label>
+                    <input type="hidden" name="categorySubMasterId" id="categorySubMasterId">
                     <select class="form-control input-sm m-b-10" name="subMainCategory" id="subMainCategory">
                       <option value="0">Select category
                       </option>
@@ -457,11 +460,11 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
                     </label>
                     <input type="text" class="form-control" name="subCategory" id="subCategory" placeholder="Enter sub-category ">
                   </div>
-                  <button class="btn btn-primary pull-right" id="saveBtnInSubCategoryMaster" type="button">Save
+                  <button class="btn btn-primary pull-right" data-category-sub-save-type="save" id="saveBtnInSubCategoryMaster" type="button">Save
                   </button>
                 </form>
               </div>
-              <div class="col-md-4" style="border-left: thick solid #39435C;">
+              <div class="col-md-4" id="productSubTwoCategoryModel" style="border-left: thick solid #39435C;">
                 <form role="form" name="subTwoCategoryMasterForm" id="subTwoCategoryMasterForm">  
                   <div class="form-group">
                     <label for="subTwoMainCategory">Select Product Category
@@ -478,9 +481,10 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
                     </select>
                     <label for="subThreeCategory">Sub-Category-2
                     </label>
+                    <input type="hidden" name="categorySubTwoMasterId" id="categorySubTwoMasterId">
                     <input type="text" class="form-control" name="subThreeCategory" id="subThreeCategory" placeholder="Enter sub-category ">
                   </div>
-                  <button class="btn btn-primary pull-right" id="saveBtnInSubTwoCategoryMaster" type="button">Save
+                  <button class="btn btn-primary pull-right" data-category-sub-two-save-type="save" id="saveBtnInSubTwoCategoryMaster" type="button">Save
                   </button>
                 </form>
               </div>
@@ -489,7 +493,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
           <div class="modal-footer">
             <span id="category-master-ajax-panel"> 
             </span>
-            <button data-dismiss="modal" class="btn btn-default" type="button">Close
+            <button data-dismiss="modal" class="btn btn-default" id="closeBtnInCategoryMaster" type="button">Close
             </button>
           </div>
         </div>
@@ -497,7 +501,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
     </div>
     <!-- modal -->
     <?php } ?>
-    <?php if($user_role == 1 || $user_role == 2) { ?>
+    <?php if($user_role <= 4) { ?>
     <div class="col-md-3">
       <div class="sm-st clearfix">
         <a href="#capacity-list"> 
@@ -529,6 +533,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
               <div class="form-group">
                 <label for="capacityMasterDesc">Capacity Description
                 </label>
+                <input type="hidden" name="capacityMasterId" id="capacityMasterId">
                 <input type="text" class="form-control" name="capacityMasterDesc" id="capacityMasterDesc" placeholder="Enter capacity description">
               </div>
               <div class="form-group">
@@ -545,7 +550,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
           </span>
           <button data-dismiss="modal" class="btn btn-default" id="closeBtnInCapacityMaster" type="button">Close
           </button>
-          <button class="btn btn-success" id="saveBtnInCapacityMaster" type="button">Save
+          <button class="btn btn-success" data-capacity-save-type="save" id="saveBtnInCapacityMaster" type="button">Save
           </button>
         </div>
       </div>
@@ -553,10 +558,10 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
   </div>
   <!-- modal -->
   <?php } ?>
-  <?php if($user_role == 1 || $user_role == 2) { ?>
+  <?php if($user_role <= 4) { ?>
   <div class="col-md-3">
     <div class="sm-st clearfix">
-      <a href="#brand-list"> 
+      <a href="#capacity-list"> 
         <span class="sm-st-icon st-skin-black">
           <i class="fa fa-apple">
           </i>
@@ -585,6 +590,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
             <div class="form-group">
               <label for="brandMasterDesc">Brand Name
               </label>
+              <input type="hidden" name="brandMasterId" id="brandMasterId">
               <input type="text" class="form-control" name="brandMasterDesc" id="brandMasterDesc" placeholder="Enter brand name">
             </div>
           </div>
@@ -593,7 +599,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
             </span>
             <button data-dismiss="modal" class="btn btn-default" id="closeBtnInBrandMaster" type="button">Close
             </button>
-            <button class="btn btn-success" id="saveBtnInBrandMaster" type="button">Save
+            <button class="btn btn-success" data-brand-save-type="save" id="saveBtnInBrandMaster" type="button">Save
             </button>
           </div>
         </div>
@@ -602,10 +608,10 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
   </div>
   <!-- modal -->
   <?php } ?>
-  <?php if($user_role == 1 || $user_role == 2) { ?>
+  <?php if($user_role <= 4) { ?>
   <div class="col-md-3">
     <div class="sm-st clearfix">
-      <a href="#model-list"> 
+      <a href="#capacity-list"> 
         <span class="sm-st-icon st-skin-black">
           <i class="fa fa-exchange">
           </i>
@@ -654,6 +660,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
               </select>
               <label for="modelMasterDesc">Model Name
               </label>
+              <input type="hidden" name="modelMasterId" id="modelMasterId">
               <input type="text" class="form-control" name="modelMasterDesc" id="modelMasterDesc" placeholder="Enter madel name ">
             </div>
           </form>
@@ -663,7 +670,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
           </span>
           <button data-dismiss="modal" class="btn btn-default" id="closeBtnInModelMaster" type="button">Close
           </button>
-          <button class="btn btn-success" id="saveBtnInModelMaster" type="button">Save
+          <button class="btn btn-success" data-model-save-type="save" id="saveBtnInModelMaster" type="button">Save
           </button>
         </div>
       </div>
@@ -671,7 +678,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
   </div>
   <!-- modal -->
   <?php } ?>
-  <?php if($user_role == 1 || $user_role == 2) { ?>
+  <?php if($user_role <= 4) { ?>
   <div class="col-md-3">
     <div class="sm-st clearfix">
       <a href="#price-list"> 
@@ -702,6 +709,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
           <form role="form" name="priceMasterForm" id="priceMasterForm" >
             <label for="priceMasterModelDes"> Select Model
             </label>
+            <input type="hidden" name="priceMasterId" id="priceMasterId">
             <select class="form-control input-sm m-b-10" name="priceMasterModelDes" id="priceMasterModelDes">
               <option value="0">Select model
               </option>
@@ -717,7 +725,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
             <input type="date" class="form-control" name="priceMasterFrom" id="priceMasterFrom" placeholder="Enter price from">
             <label for="priceMasterTo">Price To
             </label>
-            <input type="date" class="form-control" name="priceMasterTo" id="priceMasterTo" placeholder="Enter price to">
+            <input type="date" class="form-control" name="priceMasterTo" id="priceMasterTo" >
           </form>
         </div>
         <div class="modal-footer">
@@ -725,7 +733,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
           </span>
           <button data-dismiss="modal" class="btn btn-default" id="closeBtnInPriceMaster" type="button">Close
           </button>
-          <button class="btn btn-success" id="saveBtnInPriceMaster" type="button">Save
+          <button class="btn btn-success" id="saveBtnInPriceMaster" data-price-save-type="save" type="button">Save
           </button>
         </div>
       </div>
@@ -733,7 +741,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
   </div>
   <!-- modal -->
   <?php } ?>
-  <?php if($user_role == 1 || $user_role == 2) { ?>
+  <?php if($user_role <= 4) { ?>
   <div class="col-md-3">
     <div class="sm-st clearfix">
       <a href="#product-list"> 
@@ -761,8 +769,9 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
           </h4>
         </div>
         <div class="modal-body">
-          <form role="form" id="productMasterForm" name="modelMasterForm"> 
+          <form role="form" id="productMasterForm" enctype="multipart/form-data" name="modelMasterForm">
             <div class="form-group">
+            <input type="hidden" name="productMasterId" id="productMasterId">
               <label for="productMasterProductCategory">Select Product Category
               </label>
               <select class="form-control input-sm m-b-10" name="productMasterProductCategory" id="productMasterProductCategory">
@@ -800,24 +809,25 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
           <textarea rows="4" cols="75" name="productMasterDesc" id="productMasterDesc">
           </textarea>
           <br/>
-          <input type="file" id="productImage">
+          <input type="file" name="productImage" id="productImage">
           <br>
           <img id="imageProduct" width="150" height="150" src=""  alt="Image preview...">
         </div>
-        </form>
     </div>
     <div class="modal-footer">
+      <span id="product-master-ajax-panel"></span>
       <button data-dismiss="modal" id="closeBtnInProductMaster" class="btn btn-default" type="button">Close
       </button>
-      <button class="btn btn-success" id="saveBtnInProductMaster" type="button">Save
+      <button class="btn btn-success" id="saveBtnInProductMaster" data-product-save-type="save" type="submit">Save
       </button>
     </div>
   </div>
+  </form>
   </div>
 </div>
 <!-- modal -->
 <?php } ?>
-<?php if($user_role == 1 || $user_role == 2) { ?>
+<?php if($user_role <= 4) { ?>
 <div class="col-md-3">
   <div class="sm-st clearfix">
     <a href="#version-list"> 
@@ -916,6 +926,7 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
   </div>
 </div>
 <!-- Main row -->
+<?php if($user_role <= 4) { ?>
 <div class="row" id="company-list">
   <div class="col-md-12">
     <section class="panel">
@@ -971,15 +982,17 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
     </section>
   </div>
 </div>
+<?php } ?>
+<?php if($user_role <= 4) { ?>
 <!-- Main row -->
-<div class="row" id="stock-list">
+<div class="row" id="employee-list">
   <div class="col-md-12">
     <section class="panel">
       <header class="panel-heading">
-        Stock List
-        <form action="#" method="get" class="sidebar-form">
+        Employee List
+        <div class="sidebar-form">
           <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Search..."/>
+            <input type="text" name="employeeListSearch" id="employeeListSearch" class="form-control" placeholder="Search..."/>
             <span class="input-group-btn">
               <button type='submit' name='seach' id='search-btn' class="btn btn-flat">
                 <i class="fa fa-search">
@@ -987,7 +1000,20 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
               </button>
             </span>
           </div>
-        </form>
+          <hr>
+          <nav>
+            <ul class="pager">
+              <li class="previous">
+                <a href="#employee-list" id="employeeListPrevious">Previous
+                </a>
+              </li>
+              <li class="next">
+                <a href="#employee-list" id="employeeListNext">Next
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </header>
       <div class="panel-body table-responsive">
         <table class="table table-hover">
@@ -995,259 +1021,36 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
             <tr>
               <th>#
               </th>
-              <th>Product
+              <th>Name
               </th>
-              <th>Category
+              <th>Mobile Number
               </th>
-              <!-- <th>Client</th> -->
-              <th>Model
+              <th>Email Id
               </th>
-              <!-- <th>Price</th> -->
-              <th>Brand
+              <th>Date
               </th>
               <th>Actions
               </th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1
-              </td>
-              <td>Facebook
-              </td>
-              <td>Mark
-              </td>
-              <!-- <td>Steve</td> -->
-              <td>10/10/2014
-              </td>
-              <!-- <td>$1500</td> -->
-              <td>
-                <span class="label label-danger">in progress
-                </span>
-              </td>
-              <td>
-                <div class="hidden-phone">
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-check">
-                    </i>
-                  </button>
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-pencil">
-                    </i>
-                  </button>
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-times">
-                    </i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>2
-              </td>
-              <td>Twitter
-              </td>
-              <td>Evan
-              </td>
-              <!-- <td>Darren</td> -->
-              <td>10/8/2014
-              </td>
-              <!-- <td>$1500</td> -->
-              <td>
-                <span class="label label-success">completed
-                </span>
-              </td>
-              <td>
-                <div class="hidden-phone">
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-check">
-                    </i>
-                  </button>
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-pencil">
-                    </i>
-                  </button>
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-times">
-                    </i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>3
-              </td>
-              <td>Google
-              </td>
-              <td>Larry
-              </td>
-              <!-- <td>Nick</td> -->
-              <td>10/12/2014
-              </td>
-              <!-- <td>$2000</td> -->
-              <td>
-                <span class="label label-warning">in progress
-                </span>
-              </td>
-              <td>
-                <div class="hidden-phone">
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-check">
-                    </i>
-                  </button>
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-pencil">
-                    </i>
-                  </button>
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-times">
-                    </i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>4
-              </td>
-              <td>LinkedIn
-              </td>
-              <td>Allen
-              </td>
-              <!-- <td>Rock</td> -->
-              <td>10/01/2015
-              </td>
-              <!-- <td>$2000</td> -->
-              <td>
-                <span class="label label-info">in progress
-                </span>
-              </td>
-              <td>
-                <div class="hidden-phone">
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-check">
-                    </i>
-                  </button>
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-pencil">
-                    </i>
-                  </button>
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-times">
-                    </i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>5
-              </td>
-              <td>Tumblr
-              </td>
-              <td>David
-              </td>
-              <!-- <td>HHH</td> -->
-              <td>01/11/2014
-              </td>
-              <!-- <td>$2000</td> -->
-              <td>
-                <span class="label label-warning">in progress
-                </span>
-              </td>
-              <td>
-                <div class="hidden-phone">
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-check">
-                    </i>
-                  </button>
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-pencil">
-                    </i>
-                  </button>
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-times">
-                    </i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>6
-              </td>
-              <td>Tesla
-              </td>
-              <td>Musk
-              </td>
-              <!-- <td>HHH</td> -->
-              <td>01/11/2014
-              </td>
-              <!-- <td>$2000</td> -->
-              <td>
-                <span class="label label-info">in progress
-                </span>
-              </td>
-              <td>
-                <div class="hidden-phone">
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-check">
-                    </i>
-                  </button>
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-pencil">
-                    </i>
-                  </button>
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-times">
-                    </i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>7
-              </td>
-              <td>Ghost
-              </td>
-              <td>XXX
-              </td>
-              <!-- <td>HHH</td> -->
-              <td>01/11/2014
-              </td>
-              <!-- <td>$2000</td> -->
-              <td>
-                <span class="label label-info">in progress
-                </span>
-              </td>
-              <td>
-                <div class="hidden-phone">
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-check">
-                    </i>
-                  </button>
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-pencil">
-                    </i>
-                  </button>
-                  <button class="btn btn-default btn-xs">
-                    <i class="fa fa-times">
-                    </i>
-                  </button>
-                </div>
-              </td>
-            </tr>
+          <tbody id="employee_list_panel">
           </tbody>
         </table>
       </div>
     </section>
   </div>
 </div>
-<div class="row" id="work-progress">
-  <div class="col-md-12">
+<?php } ?>
+<!-- Main row -->
+<?php if($user_role <= 4) { ?>
+<div class="row" id="category-list">
+  <div class="col-md-4">
     <section class="panel">
       <header class="panel-heading">
-        Work Progress
-        <form action="#" method="get" class="sidebar-form">
+        Category List 
+        <div class="sidebar-form">
           <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Search..."/>
+            <input type="text" name="categoryListSearch" id="categoryListSearch" class="form-control" placeholder="Search..."/>
             <span class="input-group-btn">
               <button type='submit' name='seach' id='search-btn' class="btn btn-flat">
                 <i class="fa fa-search">
@@ -1255,7 +1058,20 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
               </button>
             </span>
           </div>
-        </form>
+          <hr>
+          <nav>
+            <ul class="pager">
+              <li class="previous">
+                <a href="#category-list" id="categoryListPrevious">Previous
+                </a>
+              </li>
+              <li class="next">
+                <a href="#category-list" id="categoryListNext">Next
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </header>
       <div class="panel-body table-responsive">
         <table class="table table-hover">
@@ -1263,176 +1079,25 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
             <tr>
               <th>#
               </th>
-              <th>Project
+              <th>Category Name
               </th>
-              <th>Manager
-              </th>
-              <!-- <th>Client</th> -->
-              <th>Deadline
-              </th>
-              <!-- <th>Price</th> -->
-              <th>Status
-              </th>
-              <th>Progress
+              <th>Actions
               </th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1
-              </td>
-              <td>Facebook
-              </td>
-              <td>Mark
-              </td>
-              <!-- <td>Steve</td> -->
-              <td>10/10/2014
-              </td>
-              <!-- <td>$1500</td> -->
-              <td>
-                <span class="label label-danger">in progress
-                </span>
-              </td>
-              <td>
-                <span class="badge badge-info">50%
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <td>2
-              </td>
-              <td>Twitter
-              </td>
-              <td>Evan
-              </td>
-              <!-- <td>Darren</td> -->
-              <td>10/8/2014
-              </td>
-              <!-- <td>$1500</td> -->
-              <td>
-                <span class="label label-success">completed
-                </span>
-              </td>
-              <td>
-                <span class="badge badge-success">100%
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <td>3
-              </td>
-              <td>Google
-              </td>
-              <td>Larry
-              </td>
-              <!-- <td>Nick</td> -->
-              <td>10/12/2014
-              </td>
-              <!-- <td>$2000</td> -->
-              <td>
-                <span class="label label-warning">in progress
-                </span>
-              </td>
-              <td>
-                <span class="badge badge-warning">75%
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <td>4
-              </td>
-              <td>LinkedIn
-              </td>
-              <td>Allen
-              </td>
-              <!-- <td>Rock</td> -->
-              <td>10/01/2015
-              </td>
-              <!-- <td>$2000</td> -->
-              <td>
-                <span class="label label-info">in progress
-                </span>
-              </td>
-              <td>
-                <span class="badge badge-info">65%
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <td>5
-              </td>
-              <td>Tumblr
-              </td>
-              <td>David
-              </td>
-              <!-- <td>HHH</td> -->
-              <td>01/11/2014
-              </td>
-              <!-- <td>$2000</td> -->
-              <td>
-                <span class="label label-warning">in progress
-                </span>
-              </td>
-              <td>
-                <span class="badge badge-danger">95%
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <td>6
-              </td>
-              <td>Tesla
-              </td>
-              <td>Musk
-              </td>
-              <!-- <td>HHH</td> -->
-              <td>01/11/2014
-              </td>
-              <!-- <td>$2000</td> -->
-              <td>
-                <span class="label label-info">in progress
-                </span>
-              </td>
-              <td>
-                <span class="badge badge-success">95%
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <td>7
-              </td>
-              <td>Ghost
-              </td>
-              <td>XXX
-              </td>
-              <!-- <td>HHH</td> -->
-              <td>01/11/2014
-              </td>
-              <!-- <td>$2000</td> -->
-              <td>
-                <span class="label label-info">in progress
-                </span>
-              </td>
-              <td>
-                <span class="badge badge-success">95%
-                </span>
-              </td>
-            </tr>
+          <tbody id="category_list_panel">
           </tbody>
         </table>
       </div>
     </section>
   </div>
-</div>
-<?php if($user_role == 1 || $user_role == 2) { ?>
-<div class="row" id="employee-list">
-  <div class="col-md-12">
+  <div class="col-md-4">
     <section class="panel">
       <header class="panel-heading">
-        Employees
-        <form action="#" method="get" class="sidebar-form">
+        Sub-Category List 
+        <div class="sidebar-form">
           <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Search..."/>
+            <input type="text" name="categorySubListSearch" id="categorySubListSearch" class="form-control" placeholder="Search..."/>
             <span class="input-group-btn">
               <button type='submit' name='seach' id='search-btn' class="btn btn-flat">
                 <i class="fa fa-search">
@@ -1440,67 +1105,334 @@ $user_role_list = json_decode($this->session->userdata('users_role_list'));
               </button>
             </span>
           </div>
-        </form>
+          <hr>
+          <nav>
+            <ul class="pager">
+              <li class="previous">
+                <a href="#sub-category-list" id="categorySubListPrevious">Previous
+                </a>
+              </li>
+              <li class="next">
+                <a href="#sub-category-list" id="categorySubListNext">Next
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </header>
-      <ul class="list-group teammates">
-        <li class="list-group-item">
-          <a href="">
-            <img src="<?php echo base_url().'/assets/'?>img/26115.jpg" width="50" height="50">
-          </a>
-          <span class="pull-right label label-danger inline m-t-15">Admin
-          </span>
-          <a href="">Damon Parker
-          </a>
-        </li>
-        <li class="list-group-item">
-          <a href="">
-            <img src="<?php echo base_url().'/assets/'?>img/26115.jpg"  width="50" height="50">
-          </a>
-          <span class="pull-right label label-info inline m-t-15">Member
-          </span>
-          <a href="">Joe Waston
-          </a>
-        </li>
-        <li class="list-group-item">
-          <a href="">
-            <img src="<?php echo base_url().'/assets/'?>img/26115.jpg"  width="50" height="50">
-          </a>
-          <span class="pull-right label label-warning inline m-t-15">Editor
-          </span>
-          <a href="">Jannie Dvis
-          </a>
-        </li>
-        <li class="list-group-item">
-          <a href="">
-            <img src="<?php echo base_url().'/assets/'?>img/26115.jpg"  width="50" height="50">
-          </a>
-          <span class="pull-right label label-warning inline m-t-15">Editor
-          </span>
-          <a href="">Emma Welson
-          </a>
-        </li>
-        <li class="list-group-item">
-          <a href="">
-            <img src="<?php echo base_url().'/assets/'?>img/26115.jpg"  width="50" height="50">
-          </a>
-          <span class="pull-right label label-success inline m-t-15">Subscriber
-          </span>
-          <a href="">Emma Welson
-          </a>
-        </li>
-      </ul>
-      <div class="panel-footer bg-white">
-        <!-- <span class="pull-right badge badge-info">32</span> -->
-        <button class="btn btn-primary btn-addon btn-sm">
-          <i class="fa fa-plus">
-          </i>
-          Add Teammate
-        </button>
+      <div class="panel-body table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#
+              </th>
+              <th>Sub-Category Name
+              </th>
+              <th>Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody id="category_sub_list_panel">
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+  <div class="col-md-4">
+    <section class="panel">
+      <header class="panel-heading">
+        Sub-Category-Two List 
+        <div class="sidebar-form">
+          <div class="input-group">
+            <input type="text" name="categorySubTwoListSearch" id="categorySubTwoListSearch" class="form-control" placeholder="Search..."/>
+            <span class="input-group-btn">
+              <button type='submit' name='seach' id='search-btn' class="btn btn-flat">
+                <i class="fa fa-search">
+                </i>
+              </button>
+            </span>
+          </div>
+          <hr>
+          <nav>
+            <ul class="pager">
+              <li class="previous">
+                <a href="#category-sub-two-list" id="categorySubTwoListPrevious">Previous
+                </a>
+              </li>
+              <li class="next">
+                <a href="#category-sub-two-list" id="categorySubTwoListNext">Next
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      <div class="panel-body table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#
+              </th>
+              <th>Category Name
+              </th>
+              <th>Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody id="category_sub_two_list_panel">
+          </tbody>
+        </table>
       </div>
     </section>
   </div>
 </div>
-<!-- row end -->
 <?php } ?>
+<?php if($user_role <= 4) { ?>
+<!-- Main row -->
+<div class="row" id="capacity-list">
+  <div class="col-md-4">
+    <section class="panel">
+      <header class="panel-heading">
+        Capacity List 
+        <div class="sidebar-form">
+          <div class="input-group">
+            <input type="text" name="capacityListSearch" id="capacityListSearch" class="form-control" placeholder="Search..."/>
+            <span class="input-group-btn">
+              <button type='submit' name='seach' id='search-btn' class="btn btn-flat">
+                <i class="fa fa-search">
+                </i>
+              </button>
+            </span>
+          </div>
+          <hr>
+          <nav>
+            <ul class="pager">
+              <li class="previous">
+                <a href="#capacity-list" id="capacityListPrevious">Previous
+                </a>
+              </li>
+              <li class="next">
+                <a href="#capacity-list" id="capacityListNext">Next
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      <div class="panel-body table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#
+              </th>
+              <th>Capacity Name
+              </th>
+              <th>Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody id="capacity_list_panel">
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+  <div class="col-md-4">
+    <section class="panel">
+      <header class="panel-heading">
+        Brand List 
+        <div class="sidebar-form">
+          <div class="input-group">
+            <input type="text" name="brandListSearch" id="brandListSearch" class="form-control" placeholder="Search..."/>
+            <span class="input-group-btn">
+              <button type='submit' name='seach' id='search-btn' class="btn btn-flat">
+                <i class="fa fa-search">
+                </i>
+              </button>
+            </span>
+          </div>
+          <hr>
+          <nav>
+            <ul class="pager">
+              <li class="previous">
+                <a href="#brand-list" id="brandListPrevious">Previous
+                </a>
+              </li>
+              <li class="next">
+                <a href="#brand-list" id="brandListNext">Next
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      <div class="panel-body table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#
+              </th>
+              <th>Brand Name
+              </th>
+              <th>Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody id="brand_list_panel">
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+  <div class="col-md-4">
+    <section class="panel">
+      <header class="panel-heading">
+        Model List 
+        <div class="sidebar-form">
+          <div class="input-group">
+            <input type="text" name="modelListSearch" id="modelListSearch" class="form-control" placeholder="Search..."/>
+            <span class="input-group-btn">
+              <button type='submit' name='seach' id='search-btn' class="btn btn-flat">
+                <i class="fa fa-search">
+                </i>
+              </button>
+            </span>
+          </div>
+          <hr>
+          <nav>
+            <ul class="pager">
+              <li class="previous">
+                <a href="#model-list" id="modelListPrevious">Previous
+                </a>
+              </li>
+              <li class="next">
+                <a href="#model-list" id="modelListNext">Next
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      <div class="panel-body table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#
+              </th>
+              <th>Model Name
+              </th>
+              <th>Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody id="model_list_panel">
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+<?php } ?>
+<!-- Main row -->
+<?php if($user_role <= 4) { ?>
+<div class="row" id="price-list">
+  <div class="col-md-6">
+    <section class="panel">
+      <header class="panel-heading">
+        Price List 
+        <div class="sidebar-form">
+          <div class="input-group">
+            <input type="text" name="priceListSearch" id="priceListSearch" class="form-control" placeholder="Search..."/>
+            <span class="input-group-btn">
+              <button type='submit' name='seach' id='search-btn' class="btn btn-flat">
+                <i class="fa fa-search">
+                </i>
+              </button>
+            </span>
+          </div>
+          <hr>
+          <nav>
+            <ul class="pager">
+              <li class="previous">
+                <a href="#price-list" id="priceListPrevious">Previous
+                </a>
+              </li>
+              <li class="next">
+                <a href="#price-list" id="priceListNext">Next
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      <div class="panel-body table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#
+              </th>
+              <th>Price Desc
+              </th>
+              <th>Price
+              </th>
+              <th>Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody id="price_list_panel">
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+  <div class="col-md-6">
+    <section class="panel">
+      <header class="panel-heading">
+        Product List 
+        <div class="sidebar-form">
+          <div class="input-group">
+            <input type="text" name="productListSearch" id="productListSearch" class="form-control" placeholder="Search..."/>
+            <span class="input-group-btn">
+              <button type='submit' name='seach' id='search-btn' class="btn btn-flat">
+                <i class="fa fa-search">
+                </i>
+              </button>
+            </span>
+          </div>
+          <hr>
+          <nav>
+            <ul class="pager">
+              <li class="previous">
+                <a href="#product-list" id="productListPrevious">Previous
+                </a>
+              </li>
+              <li class="next">
+                <a href="#product-list" id="productListNext">Next
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      <div class="panel-body table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#
+              </th>
+              <th>Product Name
+              </th>
+              <th>Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody id="product_list_panel">
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
 </section>
+<?php } ?>
 <!-- /.content -->

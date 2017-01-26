@@ -1,3 +1,14 @@
+<?php 
+$user_display_name = $this->session->userdata('user_role') == 1 ? 
+                        'Super Admin' : 
+                        ($this->session->userdata('user_role') == 2 ? 
+                            'Admin' : 
+                            ($this->session->userdata('user_role') == 3 ? 
+                                'Product Owner' : 
+                                ($this->session->userdata('user_role') == 4 ? 
+                                    'Administration Staff' 
+                                    : 'Marketing Staff' )  )  ) ;
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -71,9 +82,8 @@
                 <i class="fa fa-user">
                 </i>
                 <span>
-                  <?php 
-$user_display_name = ($this->session->userdata('user_display_name') ? : 'Guest ');
-echo strlen($user_display_name) > 20 ? substr($user_display_name,0,20)."..." : $user_display_name;
+<?php 
+  echo strlen($user_display_name) > 20 ? substr($user_display_name,0,20)."..." : $user_display_name;
 ?>
                   <i class="caret">
                   </i>
@@ -123,8 +133,7 @@ echo strlen($user_display_name) > 20 ? substr($user_display_name,0,20)."..." : $
             <div class="pull-left info">
               <p>Hello, 
                 <?php 
-$user_display_name = ($this->session->userdata('user_display_name') ? : 'Guest ');
-echo strlen($user_display_name) > 15 ? substr($user_display_name,0,10)."..." : $user_display_name;
+  echo strlen($user_display_name) > 10 ? substr($user_display_name,0,10)."..." : $user_display_name;
 ?>
               </p>
               <a href="#">

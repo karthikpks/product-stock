@@ -63,7 +63,7 @@ class LoginModel extends CI_Model{
         return false;
     }
 
-    public function insertLoginData($crm_id) {
+    public function insertLoginData($crm_id, $cmId) {
         $this->mobileNumber = $this->security->xss_clean($this->input->post('mobileNumber'));
         $this->password = $this->security->xss_clean($this->input->post('password'));
         $user_desc = "Product Owner";
@@ -84,13 +84,19 @@ class LoginModel extends CI_Model{
                     $this->parameter[4] => $user_role,
                     $this->parameter[5] => $user_desc,
                     $this->parameter[6] => date('Y-m-d'),
-                    $this->parameter[7] => date('Y-m-d'),
                     $this->parameter[8] => 1,
+                    $this->parameter[9] => $cmId,
                     $this->parameter[10] => 1
             );
         
-            $this->db->insert($this->table_name, $insertData);
-            return true;
+        $this->db->insert($this->table_name, $insertData);
+        if($this->db->insert_id()) {
+            if($this->CustomerMasterTable->updateLoinIdInCustomer($crm_id, $user_role, $this->db->insert_id())) {
+                return $this->db->insert_id(); 
+            } 
+            return false;
+        }
+            return false;
         }
         return false;
     }
@@ -105,8 +111,8 @@ class LoginModel extends CI_Model{
         }
     }
 
-    private function checkUserExist($mobileNumber) {
-        $this->db->where($this->parameter[0], $mobileNumber);
+    public function checkUserExist($mobileNumber) {
+        $this->db->where($this->parameter[1], $mobileNumber);
         $query = $this->db->get($this->table_name);
         if($query->num_rows() == 1) {
             return true;

@@ -23,6 +23,7 @@ $(function() {
               // successful request; do something with the data
               var obj = jQuery.parseJSON(data);
               if(obj.status) {
+                $("#registerForm")[0].reset();
                 $('#ajax-panel').html(obj.message);
                 $("#createBtnInWelcome").show();
               } else {

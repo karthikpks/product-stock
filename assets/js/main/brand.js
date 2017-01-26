@@ -2,13 +2,28 @@ $(function() {
     "use strict";
     
     var url = "http://localhost:8888/product-stock/";
+    var initialOffset = 10;
+    var brandListPrevious = 0;
+    var brandListNext = initialOffset;
+    var brandListNextBtnPress = false;
+    var brandListPreviousBtnPress = false;
+    var brandMasterUrl;
 
     showBrand();
+    showBrandByPage(0);
 
     $("#saveBtnInBrandMaster").click(function() {
+      
+      var BrandMasterSaveType = $(this).data("brand-save-type");
+      if(BrandMasterSaveType == "edit") {
+          brandMasterUrl = url + "BrandMasterController/updateBrandMaster";
+      } else {
+          brandMasterUrl = url + "BrandMasterController/saveBrandMaster";
+      }
+
     	$.ajax({
             type: 'POST',
-            url: url + "BrandMasterController/saveBrandMaster",
+            url: brandMasterUrl,
             data: $("#brandMasterForm").serialize(),
             beforeSend:function() {
               // this is where we append a loading image
@@ -22,15 +37,7 @@ $(function() {
               $('#brand-master-ajax-panel').html(obj.message).show().delay(5000).fadeOut();
               $("#saveBtnInBrandMaster").show();
               if(obj.status) {
-              	$("#brandMaterForm")[0].reset();
-                $('#modelMasterBrand').append($('<option>', {
-                    value: item.id,
-                    text: item.value
-                }));
-                $('#productMasterBrand').append($('<option>', {
-                    value: item.id,
-                    text: item.value
-                }));
+              	$("#brandMasterForm")[0].reset();
               }
             },
             error:function() {
@@ -70,4 +77,85 @@ $(function() {
             }
           });
     }
+
+    $("#brandListNext").click(function(){
+        showBrandByPage(brandListNext);
+        brandListNextBtnPress = true;
+        brandListPreviousBtnPress = false;
+    });
+
+    $("#brandListPrevious").click(function(){
+        showBrandByPage(brandListPrevious);
+        brandListNextBtnPress = false;
+        brandListPreviousBtnPress = true;
+    });
+
+    $("#brandListSearch").keyup(function(){
+        $(this).css("color", "#f1f2f7");
+        showBrandByPage(0);
+    });
+  
+    $(document).on('click', '.brandMasterEditBtn', function(){ 
+        var brandData = [$(this).data('brand-id'), $(this).data('brand-desc')];
+        getBrandById(brandData);
+    });
+
+    function getBrandById(brandData) {
+      $("#saveBtnInBrandMaster").data("brand-save-type", "edit");
+      $("#brandMasterId").val(brandData[0])
+      $("#brandMasterDesc").val(brandData[1]);
+      $("#brand-master").modal('show');
+    }
+
+    function showBrandByPage(offset) {
+      $.ajax({
+            type: 'GET',
+            url: url + "BrandMasterController/getAllBrandList",
+            data: {offset: offset, searchKey: $("#brandListSearch").val()},
+            beforeSend:function(){
+              // this is where we append a loading image
+              console.log('Get Brand list call..');
+            },
+            success:function(data) {
+              // successful request; do something with the data
+              var obj = jQuery.parseJSON(data);
+              if(!jQuery.isEmptyObject(obj)){
+                $('#brand_list_panel').empty();
+                $("#brand_list_templete").tmpl(obj).appendTo("#brand_list_panel");
+                if(brandListNextBtnPress) {
+                  brandListPrevious = brandListNext;
+                  brandListNext=brandListNext + initialOffset;
+                  $("#brandListNext").show();
+                  $("#brandListPrevious").hide();
+                }
+                if(brandListPreviousBtnPress) {
+                  brandListPrevious = 0;
+                  brandListNext = initialOffset;
+                  $("#brandListNext").show();
+                  $("#brandListPrevious").hide();
+                }
+                console.log('Get brand list call completed..');
+              }else {
+                if(brandListNextBtnPress) {
+                  brandListNext = brandListNext - initialOffset;
+                  brandListPrevious= brandListNext;
+                  $("#brandListNext").hide();
+                  $("#brandListPrevious").show();
+                }
+                if(brandListPreviousBtnPress) {
+                  brandListPrevious = 0;
+                  brandListNext = initialOffset;
+                  $("#brandListNext").show();
+                  $("#brandListPrevious").hide();
+                }
+                $('#brand_list_panel').html('<tr> <td colspan="6">No Records found...</td> </tr>');
+            } 
+            },
+            error:function(){
+              // failed request; give feedback to user
+              console.log('Get Brand list call has completed with error..');
+            }
+          });
+    }
+
 });

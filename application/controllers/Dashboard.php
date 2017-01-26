@@ -11,7 +11,15 @@
     }
 
     public function index(){
-        $data['msg'] = $this->session->userdata('user_role') == 1 ? '<strong>Well done!</strong> You have successfully logged in as Super Admin Account.' : ($this->session->userdata('user_role') == 2 ? '<strong>Well done!</strong> You have successfully logged in as Product Owner Account.' : ($this->session->userdata('user_role') == 3 ? '<strong>Well done!</strong> You have successfully logged in as Administration Account.' : ($this->session->userdata('user_role') == 4 ? '<strong>Well done!</strong> You have successfully logged in as Marketing Staff Account.' : '<strong>Well done!</strong> You have successfully logged in as Employee Account' )  )  ) ;
+        $data['msg'] = $this->session->userdata('user_role') == 1 ? 
+                        '<strong>Well done!</strong> You have successfully logged in as Super Admin Account.' : 
+                        ($this->session->userdata('user_role') == 2 ? 
+                            '<strong>Well done!</strong> You have successfully logged in as Admin  Account.' : 
+                            ($this->session->userdata('user_role') == 3 ? 
+                                '<strong>Well done!</strong> You have successfully logged in as Product Owner Account.' : 
+                                ($this->session->userdata('user_role') == 4 ? 
+                                    '<strong>Well done!</strong> You have successfully logged in as Administration Staff Account.' 
+                                    : '<strong>Well done!</strong> You have successfully logged in as  Marketing Staff' )  )  ) ;
 
         $this->load->view('header', $data);
         $this->load->view('index' , $data);

@@ -57,11 +57,15 @@ class Welcome extends CI_Controller {
 
     public function createCustomerForm() {
         $this->load->model('CustomerMasterTable');
+        $companyName = $this->security->xss_clean($this->input->post('companyName'));
         $firstName = $this->security->xss_clean($this->input->post('firstName'));
         $lastName = $this->security->xss_clean($this->input->post('lastName'));
         $mobileNumber = $this->security->xss_clean($this->input->post('mobileNumber'));
         $emailId = $this->security->xss_clean($this->input->post('emailId'));
         $password = $this->security->xss_clean($this->input->post('password'));
+
+        $errorMessage['companyName'] = empty($companyName) ? "Company Name is required" : 
+                                    (strlen($companyName) > 100 ? "Company Name should be enter below 100 character" : true);
 
         $errorMessage['firstName'] = empty($firstName) ? "First Name is required" : 
                                     (strlen($firstName) > 100 ? "First Name should be enter below 100 character" : true); 
@@ -77,7 +81,8 @@ class Welcome extends CI_Controller {
         $errorMessage['password'] = empty($password) ? "Password is required" : 
                                     (strlen($password) > 10 ? "Password should be enter below 10 character" : true);
 
-        if(is_bool($errorMessage['firstName']) 
+        if(is_bool($errorMessage['companyName']) 
+            && is_bool($errorMessage['firstName'])
                 && is_bool($errorMessage['lastName'])
                     && is_bool($errorMessage['mobileNumber']) 
                         && is_bool($errorMessage['emailId']) 
@@ -89,6 +94,8 @@ class Welcome extends CI_Controller {
                 $this->message = array('message' => 'User Already exits..', 'status' => false);
             }   
         
+        } else if(is_string($errorMessage['companyName'])) { 
+            $this->message = array('message' => $errorMessage['companyName'], 'status' => false);
         } else if(is_string($errorMessage['firstName'])) { 
             $this->message = array('message' => $errorMessage['firstName'], 'status' => false);
         } else if(is_string($errorMessage['lastName'])) { 

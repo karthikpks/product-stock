@@ -65,7 +65,10 @@ class CompanyMasterTable extends CI_Model{
         $this->companyEmailId = $this->security->xss_clean($this->input->post('companyEmailId'));
         $this->companyWebsite = $this->security->xss_clean($this->input->post('companyWebsite'));
         
-        //if(!$this->checkUserExist() && !$this->loginmodel->checkUserExist()) {
+        if(!$this->checkUserExist($this->companyName, $this->companyMobileNo, $this->companyEmailId) 
+            && !empty($companyMobileNo) 
+            && !empty($companyEmailId) 
+            && !$this->loginmodel->checkUserExist($this->companyMobileNo)) {
         	$insertData = array(
                     $this->companyColumn[1] => $this->session->userdata('login_id'),
 			        $this->companyColumn[2] => $this->companyName,
@@ -90,8 +93,34 @@ class CompanyMasterTable extends CI_Model{
                 return true;
 			}
 			return false;
-        //}
+        }
     }
+
+    public function insertCompanyDetailFirstTime() {
+        $this->companyName = $this->security->xss_clean($this->input->post('companyName'));
+        $this->firstName = $this->security->xss_clean($this->input->post('firstName'));
+        $this->companyMobileNo = $this->security->xss_clean($this->input->post('mobileNumber'));
+        $this->companyEmailId = $this->security->xss_clean($this->input->post('emailId'));
+        
+        if(!$this->checkUserExist($this->companyName, $this->companyMobileNo, $this->companyEmailId)) {
+            $insertData = array(
+                    $this->companyColumn[2] => $this->companyName,
+                    $this->companyColumn[8] => $this->companyMobileNo,
+                    $this->companyColumn[11] => $this->firstName,
+                    $this->companyColumn[12] => $this->companyEmailId,
+                    $this->companyColumn[14] => date("Y-m-d"),
+                    $this->companyColumn[16] => 1  
+            );
+        
+            $this->db->insert($this->table_name, $insertData);
+            if($this->db->insert_id()) {
+                return $this->db->insert_id();
+            }
+            return false;
+        }
+        return false;
+    }
+
 
     public function getCompanyMasterList() {
         $limit = 10;
@@ -192,11 +221,12 @@ class CompanyMasterTable extends CI_Model{
         } 
     }
 
-    private function checkUserExist() {
-    	$this->db->where($this->customerColumn[10], $this->mobileNumber);
-    	$this->db->where($this->customerColumn[11], $this->emailId);
+    private function checkUserExist($companyName, $companyMobileNo, $companyEmailId) {
+        $this->db->where($this->companyColumn[2], $companyName);
+    	$this->db->or_where($this->companyColumn[8], $companyMobileNo);
+    	$this->db->or_where($this->companyColumn[12], $companyEmailId);
     	$query = $this->db->get($this->table_name);
-    	if($query->num_rows() == 1) {
+    	if($query->num_rows() > 0) {
     		return true;
     	} 
     	return false;

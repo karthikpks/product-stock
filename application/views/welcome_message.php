@@ -114,6 +114,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="login-page">
       <div class="form">
         <form class="register-form" id="registerForm">
+          <input type="text" name="companyName" id="companyName" placeholder="Company Name"/>
           <input type="text" name="firstName" id="firstName" placeholder="First Name"/>
           <input type="text" name="lastName" id="lastName" placeholder="Last Name"/>
           <input type="text" name="mobileNumber" id="mobileNumber" placeholder="Mobile Number"/>
