@@ -8,7 +8,7 @@
 $(function() {
     "use strict";
     
-    var url = "http://localhost:8888/productstock/";
+    var url = "http://localhost:8888/product-stock/";
 
     var initialOffset = 10;
     var customerListPrevious = 0;
@@ -73,7 +73,7 @@ $(function() {
               // this is where we append a loading image
               $("#saveBtnInCustomerMaster").hide();
               $("#closeBtnInCustomerMaster").hide();
-              $('#customer-master-ajax-panel').html('<img src="http://localhost:8888/productstock/assets/img/ajax-loader.gif" width="50" alt="Loading..." />');
+              $('#customer-master-ajax-panel').html('<img src="http://localhost:8888/product-stock/assets/img/ajax-loader.gif" width="50" alt="Loading..." />');
             },
             success:function(data){
               // successful request; do something with the data

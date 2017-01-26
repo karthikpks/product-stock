@@ -11,9 +11,20 @@
     }
 
     public function saveCapacityMaster() {
+        $this->capacityMasterDesc = strtolower($this->security->xss_clean($this->input->post('capacityMasterDesc')));
+        $status = $this->insertCapacity();
+        $this->message = array('id' => $status, 'value'=> $this->capacityMasterDesc, 'message' => " Saved successfully..!", 'status' => true);
+        if(!$status) {
+            $this->message = array('id' => 0, 'value' => '', 'message' => "Capacity Description Already Exists or Filed to save data..!", 'status' => false);
+        }
+        echo json_encode($this->message);
+        exit();
+    }
+
+    public function updateCapacityMaster() {
     	$this->capacityMasterDesc = strtolower($this->security->xss_clean($this->input->post('capacityMasterDesc')));
-    	$status = $this->insertCapacity();
-    	$this->message = array('id' => $status, 'value'=> $this->capacityMasterDesc, 'message' => " Saved successfully..!", 'status' => true);
+    	$status = $this->CapacityMasterTable->updateCapacity();
+    	$this->message = array('id' => $status, 'value'=> $this->capacityMasterDesc, 'message' => " Updated successfully..!", 'status' => true);
         if(!$status) {
             $this->message = array('id' => 0, 'value' => '', 'message' => "Capacity Description Already Exists or Filed to save data..!", 'status' => false);
         }
@@ -26,7 +37,11 @@
     }
 
     public function getCapacityList() {
-    	echo $this->CapacityMasterTable->getCapacity();
+        echo $this->CapacityMasterTable->getCapacity();
+        exit();
+    }
+    public function getAllCapacityList() {
+    	echo $this->CapacityMasterTable->getAllCapacityList();
     	exit();
     }
 }

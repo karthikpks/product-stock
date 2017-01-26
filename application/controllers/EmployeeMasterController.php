@@ -19,6 +19,21 @@
         echo json_encode($this->message);
         exit();
     }
+
+    public function updateEmployeeMasterDetails() {
+        $status = $this->EmployeeMasterTable->updateEmployeeMasterDetails();
+        $this->message = array('message' => " Update successfully..!", 'status' => true);
+        if(!$status) {
+            $this->message = array('message' => "Filed to update data..!", 'status' => false);
+        }
+        echo json_encode($this->message);
+        exit();
+    }
+
+    public function getAllEmployeeList() {
+        echo $data = $this->EmployeeMasterTable->getAllEmployeeList();
+        exit();
+    }
  }
 
 ?>

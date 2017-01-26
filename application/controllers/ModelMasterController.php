@@ -11,9 +11,20 @@
     }
 
     public function saveModelMaster() {
+        $this->modelMasterDesc = strtolower($this->security->xss_clean($this->input->post('modelMasterDesc')));
+        $status = $this->insertModel();
+        $this->message = array('id' => $status, 'value'=> $this->modelMasterDesc, 'message' => " Saved successfully..!", 'status' => true);
+        if(!$status) {
+            $this->message = array('id' => 0, 'value' => '', 'message' => "Select All Options or Model Description Already Exists..", 'status' => false);
+        }
+        echo json_encode($this->message);
+        exit();
+    }
+
+    public function updateModelMaster() {
     	$this->modelMasterDesc = strtolower($this->security->xss_clean($this->input->post('modelMasterDesc')));
-    	$status = $this->insertModel();
-    	$this->message = array('id' => $status, 'value'=> $this->modelMasterDesc, 'message' => " Saved successfully..!", 'status' => true);
+    	$status = $this->ModelMasterTable->updateModel();
+    	$this->message = array('id' => $status, 'value'=> $this->modelMasterDesc, 'message' => " Updated successfully..!", 'status' => true);
         if(!$status) {
             $this->message = array('id' => 0, 'value' => '', 'message' => "Select All Options or Model Description Already Exists..", 'status' => false);
         }
@@ -27,6 +38,10 @@
 
     public function getModelList() {
         echo $this->ModelMasterTable->getModel();
+        exit();
+    }
+    public function getAllmodelList() {
+        echo $this->ModelMasterTable->getModelList();
         exit();
     }
 }

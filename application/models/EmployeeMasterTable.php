@@ -12,5 +12,15 @@ class EmployeeMasterTable extends CI_Model {
     public function saveEmployeeMasterTableDetails() {
     	return $this->CustomerMasterTable->insertEmployeeMasterRegisration();
     }
+
+    public function getAllEmployeeList() {
+    	$offset = $this->security->xss_clean($this->input->post('offset'));
+        echo $data = $this->CustomerMasterTable->getAllEmployeeList(10, $offset);
+        exit();
+    }
+
+    public function updateEmployeeMasterDetails() {
+        return $data = $this->CustomerMasterTable->updateEmployeeMasterDetails();
+    }
 }
 ?>

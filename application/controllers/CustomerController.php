@@ -28,7 +28,13 @@
     }
 
     public function saveCustomerDetail() {
-        $this->input->post('customerName');
+        $status = $this->CustomerMasterTable->insertCustomerDetail();
+        $this->message = array('message' => " Saved successfully..!", 'status' => true);
+        if(!$status) {
+            $this->message = array('message' => "Filed to save data..!", 'status' => false);
+        }
+        echo json_encode($this->message);
+        exit();
     }
 
     public function updateCustomerDetail() {
@@ -52,7 +58,7 @@
         exit();
     }
     
-    private function check_isvalidated(){
+    private function check_isvalidated() {
         if(! $this->session->userdata('validated')){
             redirect('welcome');
         }

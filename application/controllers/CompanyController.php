@@ -13,9 +13,9 @@
 
     public function saveCompanyDetail() {
         $status = $this->CompanyMasterTable->insertCompanyDetail();
-        $this->message = array('message' => " Update successfully..!", 'status' => true);
+        $this->message = array('message' => " Saved successfully..!", 'status' => true);
         if(!$status) {
-            $this->message = array('message' => "Filed to update data..!", 'status' => false);
+            $this->message = array('message' => "Filed to save data..!", 'status' => false);
         }
         echo json_encode($this->message);
         exit();
